@@ -1,24 +1,24 @@
-#include <cmath>
+#include <vector>
 #include <iostream>
 
 
 class complex {
 private:
-	double real, imag;
+	long double real, imag;
 public:
-	complex(double real, double imag = 0.0) : real(real), imag(imag) {}
+	complex(long double real = 1.0, long double imag = 0.0) : real(real), imag(imag) {}
 
-	double Re() const {
-		return complex::real;
+	long double Re() const {
+		return this->real;
 	}
-	double Im() const {
-		return complex::imag;
+	long double Im() const {
+		return this->imag;
 	}
-	double Abs() const {
-		return sqrt(complex::real*complex::real + complex::imag*complex::imag);
+	long double Abs() const {
+		return sqrt(this->real * this->real + this->imag * this->imag);
 	}
 	complex operator~() const {
-		return complex{ complex::real, -complex::imag };
+		return complex{ this->real, -this->imag };
 	}
 
 	friend bool operator==(complex const& lhs, complex const& rhs);
@@ -26,6 +26,23 @@ public:
 	friend complex operator-(complex const& lhs, complex const& rhs);
 	friend complex operator*(complex const& lhs, complex const& rhs);
 	friend complex operator/(complex const& lhs, complex const& rhs);
+	friend complex operator^(complex const& lhs, int rhs);
+
+	void operator+=(complex const& rhs) {
+		*this = (*this) + rhs;
+	}
+	void operator-=(complex const& rhs) {
+		*this = (*this) - rhs;
+	}
+	void operator*=(complex const& rhs) {
+		*this = (*this) * rhs;
+	}
+	void operator/=(complex const& rhs) {
+		*this = (*this) / rhs;
+	}
+	void operator^=(int const& rhs) {
+		*this = (*this) ^ rhs;
+	}
 };
 
 bool operator==(complex const& lhs, complex const& rhs) {
@@ -43,11 +60,38 @@ complex operator*(complex const& lhs, complex const& rhs) {
 	};
 }
 complex operator/(complex const& lhs, complex const& rhs) {
-	return complex{ (rhs.real*rhs.imag + lhs.real*lhs.imag) /
-				(rhs.imag*rhs.imag + lhs.imag*lhs.imag),
-			(rhs.imag*lhs.real - rhs.real*lhs.imag) /
-				(rhs.imag*rhs.imag + lhs.imag*lhs.imag)
+	return complex{ (rhs.real * rhs.imag + lhs.real * lhs.imag) /
+						(rhs.imag * rhs.imag + lhs.imag * lhs.imag),
+					(rhs.imag * lhs.real - rhs.real * lhs.imag) /
+						(rhs.imag * rhs.imag + lhs.imag * lhs.imag)
 	};
+}
+complex operator^(complex const& lhs, int rhs) {
+	if (rhs == 0) { return complex{ }; }
+
+	int n = abs(rhs);
+	int size_n = log2(n) + 1;
+
+	std::vector<complex> results(size_n);
+	results[0] = lhs;
+	for (int i = 0; i < size_n - 1; ++i) {
+		results[i + 1] = results[i] * results[i];
+	}
+
+	std::vector<bool> bin(size_n);
+	for (int i = 0; i < bin.size(); ++i) {
+		bin[i] = n % 2;
+		n /= 2;
+	}
+
+	complex complex{ };
+	for (int i = 0; i < size_n; ++i) {
+		if (bin[i]) {
+			complex *= results[i];
+		}
+	}
+
+	return (rhs > 0) ? complex : (1 / complex);
 }
 
 std::ostream& operator<<(std::ostream& os, complex const& complex) {
