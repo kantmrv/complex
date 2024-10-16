@@ -37,9 +37,9 @@ public:
 	}
 	complex operator/(complex const& other) {
 		return complex{ (this->real * this->imag + other.real * other.imag) /
-							(this->imag * this->imag + other.imag * other.imag),
-						(this->imag * other.real - this->real * other.imag) /
-							(this->imag * this->imag + other.imag * other.imag)
+					(this->imag * this->imag + other.imag * other.imag),
+				(this->imag * other.real - this->real * other.imag) /
+					(this->imag * this->imag + other.imag * other.imag)
 		};
 	}
 };
