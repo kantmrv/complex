@@ -2,12 +2,12 @@
 #include <cmath>
 
 
-class complex
-{
+class complex {
 private:
 	double real, imag;
 public:
 	complex(double real, double imag = 0.0) : real(real), imag(imag) {}
+
 	double Re() const {
 		return this->real;
 	}
@@ -17,6 +17,7 @@ public:
 	double Abs() const {
 		return sqrt(this->real * this->real + this->imag * this->imag);
 	}
+
 	complex operator~() {
 		return complex{ this->real, -this->imag };
 	}
@@ -43,11 +44,9 @@ public:
 	}
 };
 
-
 std::ostream& operator<<(std::ostream& os, complex const& c) {
 	return os << "( " << c.Re() << "; " << c.Im() << " )";
 }
-
 
 int main() {
 	complex a = { 3, 4 }, b = { 2, 1 };
