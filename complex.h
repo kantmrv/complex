@@ -15,7 +15,7 @@ public:
 		return complex::imag;
 	}
 	double Abs() const {
-		return sqrt(complex::real * complex::real + complex::imag * complex::imag);
+		return sqrt(complex::real*complex::real + complex::imag*complex::imag);
 	}
 	complex operator~() const {
 		return complex{ complex::real, -complex::imag };
@@ -43,10 +43,10 @@ complex operator*(complex const& lhs, complex const& rhs) {
 	};
 }
 complex operator/(complex const& lhs, complex const& rhs) {
-	return complex{ (rhs.real * rhs.imag + lhs.real * lhs.imag) /
-				(rhs.imag * rhs.imag + lhs.imag * lhs.imag),
-			(rhs.imag * lhs.real - rhs.real * lhs.imag) /
-				(rhs.imag * rhs.imag + lhs.imag * lhs.imag)
+	return complex{ (rhs.real*rhs.imag + lhs.real*lhs.imag) /
+				(rhs.imag*rhs.imag + lhs.imag*lhs.imag),
+			(rhs.imag*lhs.real - rhs.real*lhs.imag) /
+				(rhs.imag*rhs.imag + lhs.imag*lhs.imag)
 	};
 }
 
