@@ -1,5 +1,5 @@
-﻿#include <iostream>
 #include <cmath>
+#include <iostream>
 
 
 class complex {
@@ -18,11 +18,11 @@ public:
 		return sqrt(this->real * this->real + this->imag * this->imag);
 	}
 
-	complex operator~() {
-		return complex{ this->real, -this->imag };
-	}
 	bool operator=(complex const& other) {
 		return this->real == other.real && this->imag == other.imag;
+	}
+        complex operator~() {
+		return complex{ this->real, -this->imag };
 	}
 	complex operator+(complex const& other) {
 		return complex{ this->real + other.real, this->imag + other.imag };
