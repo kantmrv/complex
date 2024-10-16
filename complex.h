@@ -9,16 +9,16 @@ public:
 	complex(double real, double imag = 0.0) : real(real), imag(imag) {}
 
 	double Re() const {
-		return this->real;
+		return complex::real;
 	}
 	double Im() const {
-		return this->imag;
+		return complex::imag;
 	}
 	double Abs() const {
-		return sqrt(this->real * this->real + this->imag * this->imag);
+		return sqrt(complex::real * complex::real + complex::imag * complex::imag);
 	}
-	complex operator~() {
-		return complex{ this->real, -this->imag };
+	complex operator~() const {
+		return complex{ complex::real, -complex::imag };
 	}
 
 	friend bool operator==(complex const& lhs, complex const& rhs);
