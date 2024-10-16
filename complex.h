@@ -44,9 +44,9 @@ complex operator*(complex const& lhs, complex const& rhs) {
 }
 complex operator/(complex const& lhs, complex const& rhs) {
 	return complex{ (rhs.real * rhs.imag + lhs.real * lhs.imag) /
-						(rhs.imag * rhs.imag + lhs.imag * lhs.imag),
-					(rhs.imag * lhs.real - rhs.real * lhs.imag) /
-						(rhs.imag * rhs.imag + lhs.imag * lhs.imag)
+				(rhs.imag * rhs.imag + lhs.imag * lhs.imag),
+			(rhs.imag * lhs.real - rhs.real * lhs.imag) /
+				(rhs.imag * rhs.imag + lhs.imag * lhs.imag)
 	};
 }
 
