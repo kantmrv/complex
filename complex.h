@@ -1,5 +1,5 @@
-#include <vector>
 #include <iostream>
+#include <vector>
 
 
 class complex {
@@ -22,23 +22,53 @@ public:
 	}
 
 	friend bool operator==(complex const& lhs, complex const& rhs);
-	friend complex operator+(complex const& lhs, complex const& rhs);
-	friend complex operator-(complex const& lhs, complex const& rhs);
-	friend complex operator*(complex const& lhs, complex const& rhs);
-	friend complex operator/(complex const& lhs, complex const& rhs);
-	friend complex operator^(complex const& lhs, int rhs);
 
+	friend complex operator+(complex const& lhs, complex const& rhs);
 	void operator+=(complex const& rhs) {
 		*this = (*this) + rhs;
 	}
+
+	friend complex operator-(complex const& lhs, complex const& rhs);
 	void operator-=(complex const& rhs) {
 		*this = (*this) - rhs;
 	}
+
+	friend complex operator*(complex const& lhs, complex const& rhs);
 	void operator*=(complex const& rhs) {
 		*this = (*this) * rhs;
 	}
+
+	friend complex operator/(complex const& lhs, complex const& rhs);
 	void operator/=(complex const& rhs) {
 		*this = (*this) / rhs;
+	}
+
+	complex operator^(int rhs) {
+		if (rhs == 0) { return complex{ }; }
+
+		int n = abs(rhs);
+		int size_n = log2(n) + 1;
+
+		std::vector<complex> results(size_n);
+		results[0] = *this;
+		for (int i = 0; i < size_n - 1; ++i) {
+			results[i + 1] = results[i] * results[i];
+		}
+
+		std::vector<bool> bin(size_n);
+		for (int i = 0; i < bin.size(); ++i) {
+			bin[i] = n % 2;
+			n /= 2;
+		}
+
+		complex complex{ };
+		for (int i = 0; i < size_n; ++i) {
+			if (bin[i]) {
+				complex *= results[i];
+			}
+		}
+
+		return (rhs > 0) ? complex : (1 / complex);
 	}
 	void operator^=(int const& rhs) {
 		*this = (*this) ^ rhs;
@@ -65,33 +95,6 @@ complex operator/(complex const& lhs, complex const& rhs) {
 					(rhs.imag * lhs.real - rhs.real * lhs.imag) /
 						(rhs.imag * rhs.imag + lhs.imag * lhs.imag)
 	};
-}
-complex operator^(complex const& lhs, int rhs) {
-	if (rhs == 0) { return complex{ }; }
-
-	int n = abs(rhs);
-	int size_n = log2(n) + 1;
-
-	std::vector<complex> results(size_n);
-	results[0] = lhs;
-	for (int i = 0; i < size_n - 1; ++i) {
-		results[i + 1] = results[i] * results[i];
-	}
-
-	std::vector<bool> bin(size_n);
-	for (int i = 0; i < bin.size(); ++i) {
-		bin[i] = n % 2;
-		n /= 2;
-	}
-
-	complex complex{ };
-	for (int i = 0; i < size_n; ++i) {
-		if (bin[i]) {
-			complex *= results[i];
-		}
-	}
-
-	return (rhs > 0) ? complex : (1 / complex);
 }
 
 std::ostream& operator<<(std::ostream& os, complex const& complex) {
