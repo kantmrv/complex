@@ -141,4 +141,5 @@ std::ostream& operator<<(std::ostream& os, const std::vector<complex>& z) {
 	return os;
 }
 
+
 #endif // INCLUDE_COMPLEX_H_
