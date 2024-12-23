@@ -79,7 +79,7 @@ complex complex::Pow(int deg) {
 	return (deg > 0) ? z : (1 / z);
 }
 std::vector<complex> complex::Rt(unsigned int n) {
-	long double pi = 4 * atan(1.0L);
+	long double pi = 4.0L * atan(1.0L);
 	std::vector<complex> z(n);
 
 	for (int i = 0; i < n; ++i) {
@@ -89,7 +89,7 @@ std::vector<complex> complex::Rt(unsigned int n) {
 	return z;
 }
 complex complex::Rt(unsigned int n, unsigned int k) {
-	long double pi = 4 * atan(1.0L);
+	long double pi = 4.0L * atan(1.0L);
 
 	return pow(this->Abs(), 1 / n) * ::complex{ cos((this->Arg() + 2 * pi * k) / n), sin((this->Arg() + 2 * pi * k) / n) };
 }
