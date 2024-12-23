@@ -22,7 +22,7 @@ public:
 		return sqrt(this->real * this->real + this->imag * this->imag);
 	}
 	long double Arg() const {
-		return atan(this->imag / this->real);
+		return atan2(this->imag, this->real);
 	}
 	complex operator~() const {
 		return complex{ this->real, -this->imag };
@@ -89,7 +89,7 @@ std::vector<complex> complex::Rt(unsigned int n) {
 	return z;
 }
 complex complex::Rt(unsigned int n, unsigned int k) {
-	double pi = 4 * atan(1.0L);
+	long double pi = 4 * atan(1.0L);
 
 	return pow(this->Abs(), 1 / n) * ::complex{ cos((this->Arg() + 2 * pi * k) / n), sin((this->Arg() + 2 * pi * k) / n) };
 }
